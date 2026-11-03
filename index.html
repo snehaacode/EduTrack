@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EduTrack | School Management</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2563eb;
+    --sidebar: #13294b;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+}
+
+body.teal {
+    --primary: #0f9f8f;
+    --sidebar: #123b3a;
+}
+
+body.purple {
+    --primary: #7c3aed;
+    --sidebar: #35205c;
+}
+
+body.dark {
+    --primary: #60a5fa;
+    --sidebar: #0b1220;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --muted: #a8b5c7;
+    --border: #334155;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Layout */
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: var(--sidebar);
+    color: white;
+    padding: 25px 18px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.logo span {
+    color: #60a5fa;
+}
+
+.menu a {
+    display: block;
+    color: #dbeafe;
+    text-decoration: none;
+    padding: 13px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: var(--primary);
+    color: white;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Topbar */
+
+.topbar {
+    background: var(--card);
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    gap: 15px;
+}
+
+.topbar h2 {
+    font-size: 21px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+}
+
+/* Dashboard */
+
+.content {
+    padding: 25px;
+}
+
+.welcome {
+    margin-bottom: 25px;
+}
+
+.welcome p {
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: var(--card);
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.card h3 {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: normal;
+    margin-bottom: 14px;
+}
+
+.number {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.section-title {
+    margin-bottom: 15px;
+}
+
+.notice {
+    padding: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.notice:last-child {
+    border-bottom: none;
+}
+
+.notice p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* Settings */
+
+.settings {
+    margin-top: 25px;
+}
+
+.theme-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.theme-btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.theme-btn:hover {
+    border-color: var(--primary);
+}
+
+.theme-btn.active {
+    border: 2px solid var(--primary);
+    font-weight: bold;
+}
+
+.dot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .menu {
+        display: flex;
+        overflow-x: auto;
+        gap: 5px;
+    }
+
+    .menu a {
+        white-space: nowrap;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .number {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">Edu<span>Track</span></div>
+
+        <nav class="menu">
+            <a class="active" href="#dashboard">Dashboard</a>
+            <a href="#students">Students</a>
+            <a href="#teachers">Teachers</a>
+            <a href="#classes">Classes</a>
+            <a href="#attendance">Attendance</a>
+            <a href="#homework">Homework</a>
+            <a href="#results">Results</a>
+            <a href="#notices">Notices</a>
+            <a href="#settings">Settings</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <h2>Dashboard Overview</h2>
+
+            <div class="profile">
+                <div class="avatar">A</div>
+                <span>Admin</span>
+            </div>
+
+        </header>
+
+        <div class="content">
+
+            <section class="welcome" id="dashboard">
+                <h2>Welcome to EduTrack 👋</h2>
+                <p>Smart School Management System</p>
+            </section>
+
+            <!-- Statistics -->
+
+            <section class="stats">
+
+                <div class="card">
+                    <h3>Total Students</h3>
+                    <div class="number">1,250</div>
+                </div>
+
+                <div class="card">
+                    <h3>Total Teachers</h3>
+                    <div class="number">65</div>
+                </div>
+
+                <div class="card">
+                    <h3>Total Classes</h3>
+                    <div class="number">32</div>
+                </div>
+
+                <div class="card">
+                    <h3>Attendance Today</h3>
+                    <div class="number">94%</div>
+                </div>
+
+            </section>
+
+            <!-- Notices -->
+
+            <section class="card" id="notices">
+
+                <h3 class="section-title">Recent School Notices</h3>
+
+                <div class="notice">
+                    <strong>Welcome to EduTrack</strong>
+                    <p>Your school management dashboard is ready.</p>
+                </div>
+
+                <div class="notice">
+                    <strong>Demo Notice</strong>
+                    <p>Important school announcements will appear here.</p>
+                </div>
+
+                <div class="notice">
+                    <strong>Upcoming Events</strong>
+                    <p>School events and activities will be displayed here.</p>
+                </div>
+
+            </section>
+
+            <!-- Theme Settings -->
+
+            <section class="card settings" id="settings">
+
+                <h3 class="section-title">Appearance Settings</h3>
+
+                <p style="color:var(--muted)">
+                    Choose your preferred dashboard theme.
+                </p>
+
+                <div class="theme-options">
+
+                    <button class="theme-btn" onclick="changeTheme('blue', this)">
+                        <span class="dot" style="background:#2563eb"></span>
+                        Blue
+                    </button>
+
+                    <button class="theme-btn" onclick="changeTheme('teal', this)">
+                        <span class="dot" style="background:#0f9f8f"></span>
+                        Teal
+                    </button>
+
+                    <button class="theme-btn" onclick="changeTheme('purple', this)">
+                        <span class="dot" style="background:#7c3aed"></span>
+                        Purple
+                    </button>
+
+                    <button class="theme-btn" onclick="changeTheme('dark', this)">
+                        <span class="dot" style="background:#1e293b"></span>
+                        Dark
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+
+// Change Dashboard Theme
+
+function changeTheme(theme, button) {
+
+    document.body.classList.remove(
+        "teal",
+        "purple",
+        "dark"
+    );
+
+    if (theme !== "blue") {
+        document.body.classList.add(theme);
+    }
+
+    localStorage.setItem("eduTrackTheme", theme);
+
+    updateActiveButton(theme);
+}
+
+// Highlight Selected Theme
+
+function updateActiveButton(theme) {
+
+    document.querySelectorAll(".theme-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    const buttons = document.querySelectorAll(".theme-btn");
+
+    const themeIndex = {
+        blue: 0,
+        teal: 1,
+        purple: 2,
+        dark: 3
+    };
+
+    buttons[themeIndex[theme]].classList.add("active");
+}
+
+// Load Saved Theme
+
+const savedTheme = localStorage.getItem("eduTrackTheme") || "blue";
+
+changeTheme(savedTheme);
+
+</script>
+
+</body>
+</html>
