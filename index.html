@@ -518,6 +518,62 @@ body {
 
 
 
+<!-- Teacher Management -->
+
+<section class="card student-section" id="teachers">
+
+    <h3 class="section-title">Teacher Management</h3>
+
+    <p style="color:var(--muted)">
+        Add and manage school teachers.
+    </p>
+
+    <form class="student-form" id="teacherForm">
+
+        <input type="text" id="teacherName"
+        placeholder="Teacher Full Name" required>
+
+        <input type="text" id="teacherId"
+        placeholder="Teacher ID" required>
+
+        <input type="text" id="teacherSubject"
+        placeholder="Subject" required>
+
+        <input type="text" id="teacherDepartment"
+        placeholder="Department" required>
+
+        <button type="submit" class="primary-btn">
+            + Add Teacher
+        </button>
+
+    </form>
+
+    <div class="table-wrapper">
+
+        <table class="student-table">
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Teacher ID</th>
+                    <th>Subject</th>
+                    <th>Department</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="teacherList"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+
+
 
             <!-- Notices -->
 
