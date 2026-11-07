@@ -362,6 +362,56 @@ body {
 
 
 
+/* Attendance Management */
+
+.attendance-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.attendance-form input,
+.attendance-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.attendance-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.attendance-summary .card {
+    padding: 15px;
+}
+
+.attendance-summary h3 {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.attendance-summary strong {
+    font-size: 24px;
+    color: var(--primary);
+}
+
+@media (max-width: 600px) {
+    .attendance-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
 </style>
 </head>
 
