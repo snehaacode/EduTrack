@@ -1154,6 +1154,217 @@ showPage("dashboard");
 
 
 
+// Attendance Management System
+
+let attendanceRecords = [];
+
+try {
+    attendanceRecords = JSON.parse(
+        localStorage.getItem("eduTrackAttendance")
+    ) || [];
+} catch (error) {
+    attendanceRecords = [];
+}
+
+// Set today's date
+
+const dateInput = document.getElementById("attendanceDate");
+
+const today = new Date();
+const localToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0")
+].join("-");
+
+dateInput.value = localToday;
+
+// Load students according to selected class
+
+function loadAttendanceStudents() {
+
+    const selectedClass =
+        document.getElementById("attendanceClass").value;
+
+    const studentSelect =
+        document.getElementById("attendanceStudent");
+
+    studentSelect.innerHTML =
+        '<option value="">Select Student</option>';
+
+    const classStudents = students.filter(function(student) {
+        return student.className === selectedClass;
+    });
+
+    classStudents.forEach(function(student) {
+
+        const option = document.createElement("option");
+
+        option.value = student.roll;
+        option.textContent = student.name + " (" + student.roll + ")";
+
+        studentSelect.appendChild(option);
+
+    });
+
+}
+
+document.getElementById("attendanceClass")
+.addEventListener("change", loadAttendanceStudents);
+
+// Save attendance
+
+document.getElementById("attendanceForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const date = dateInput.value;
+    const className =
+        document.getElementById("attendanceClass").value;
+
+    const roll =
+        document.getElementById("attendanceStudent").value;
+
+    const status =
+        document.getElementById("attendanceStatus").value;
+
+    const student = students.find(function(item) {
+        return item.roll === roll &&
+               item.className === className;
+    });
+
+    if (!student) {
+        alert("Please select a valid student.");
+        return;
+    }
+
+    const alreadyMarked = attendanceRecords.some(function(record) {
+        return record.date === date &&
+               record.roll === roll &&
+               record.className === className;
+    });
+
+    if (alreadyMarked) {
+        alert("Attendance already marked for this student!");
+        return;
+    }
+
+    attendanceRecords.push({
+        date: date,
+        name: student.name,
+        roll: student.roll,
+        className: className,
+        status: status
+    });
+
+    saveAttendance();
+
+    this.reset();
+    dateInput.value = localToday;
+
+    alert("Attendance saved successfully!");
+
+});
+
+// Save records
+
+function saveAttendance() {
+
+    localStorage.setItem(
+        "eduTrackAttendance",
+        JSON.stringify(attendanceRecords)
+    );
+
+    displayAttendance();
+
+}
+
+// Display attendance
+
+function displayAttendance() {
+
+    const list = document.getElementById("attendanceList");
+
+    list.innerHTML = "";
+
+    const selectedDate = dateInput.value;
+    const selectedClass =
+        document.getElementById("attendanceClass").value;
+
+    const filteredRecords = attendanceRecords.filter(function(record) {
+
+        return record.date === selectedDate &&
+               (!selectedClass || record.className === selectedClass);
+
+    });
+
+    filteredRecords.forEach(function(record, index) {
+
+        const row = document.createElement("tr");
+
+        [
+            record.date,
+            record.name,
+            record.className,
+            record.status
+        ].forEach(function(value) {
+
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+
+        });
+
+        const actionCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+
+        deleteButton.addEventListener("click", function() {
+
+            attendanceRecords =
+                attendanceRecords.filter(function(item) {
+                    return item !== record;
+                });
+
+            saveAttendance();
+
+        });
+
+        actionCell.appendChild(deleteButton);
+        row.appendChild(actionCell);
+
+        list.appendChild(row);
+
+    });
+
+    const present = filteredRecords.filter(function(record) {
+        return record.status === "Present";
+    }).length;
+
+    const absent = filteredRecords.filter(function(record) {
+        return record.status === "Absent";
+    }).length;
+
+    document.getElementById("totalAttendance").textContent =
+        filteredRecords.length;
+
+    document.getElementById("presentCount").textContent = present;
+
+    document.getElementById("absentCount").textContent = absent;
+
+}
+
+dateInput.addEventListener("change", displayAttendance);
+
+document.getElementById("attendanceClass")
+.addEventListener("change", displayAttendance);
+
+displayAttendance();
+
+
 
 
 
