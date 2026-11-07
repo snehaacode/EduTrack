@@ -814,6 +814,128 @@ displayStudents();
 
 
 
+
+// Teacher Management System
+
+let teachers = [];
+
+try {
+    teachers = JSON.parse(
+        localStorage.getItem("eduTrackTeachers")
+    ) || [];
+} catch (error) {
+    teachers = [];
+}
+
+// Display Teachers
+
+function displayTeachers() {
+
+    const list = document.getElementById("teacherList");
+    list.innerHTML = "";
+
+    teachers.forEach(function(teacher) {
+
+        const row = document.createElement("tr");
+
+        [
+            teacher.name,
+            teacher.id,
+            teacher.subject,
+            teacher.department
+        ].forEach(function(value) {
+
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+
+        });
+
+        const actionCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+
+        deleteButton.addEventListener("click", function() {
+            deleteTeacher(teacher.id);
+        });
+
+        actionCell.appendChild(deleteButton);
+        row.appendChild(actionCell);
+
+        list.appendChild(row);
+
+    });
+}
+
+// Add Teacher
+
+document.getElementById("teacherForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const teacher = {
+
+        name: document.getElementById("teacherName").value.trim(),
+        id: document.getElementById("teacherId").value.trim(),
+        subject: document.getElementById("teacherSubject").value.trim(),
+        department: document.getElementById("teacherDepartment").value.trim()
+
+    };
+
+    const exists = teachers.some(function(item) {
+        return item.id.toLowerCase() === teacher.id.toLowerCase();
+    });
+
+    if (exists) {
+        alert("Teacher ID already exists!");
+        return;
+    }
+
+    teachers.push(teacher);
+
+    saveTeachers();
+
+    this.reset();
+
+    alert("Teacher added successfully!");
+
+});
+
+// Save Teachers
+
+function saveTeachers() {
+
+    localStorage.setItem(
+        "eduTrackTeachers",
+        JSON.stringify(teachers)
+    );
+
+    displayTeachers();
+
+}
+
+// Delete Teacher
+
+function deleteTeacher(id) {
+
+    if (!confirm("Delete this teacher?")) return;
+
+    teachers = teachers.filter(function(teacher) {
+        return teacher.id !== id;
+    });
+
+    saveTeachers();
+
+}
+
+// Initial Display
+
+displayTeachers();
+
+
 </script>
 
 </body>
