@@ -710,6 +710,69 @@ body {
 
 
 
+<!-- Homework Management -->
+
+<section id="homework" class="page-section">
+
+    <div class="section-header">
+        <h2>Homework Management</h2>
+        <p>Assign and manage student homework</p>
+    </div>
+
+    <div class="card">
+        <h3>Add New Homework</h3>
+
+        <form id="homeworkForm">
+
+            <input type="text"
+                   id="homeworkTitle"
+                   placeholder="Homework Title"
+                   required>
+
+            <input type="text"
+                   id="homeworkSubject"
+                   placeholder="Subject"
+                   required>
+
+            <input type="text"
+                   id="homeworkClass"
+                   placeholder="Class"
+                   required>
+
+            <textarea id="homeworkDescription"
+                      placeholder="Homework Description"
+                      required></textarea>
+
+            <label>Submission Date</label>
+            <input type="date"
+                   id="homeworkDueDate"
+                   required>
+
+            <button type="submit">Add Homework</button>
+
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Homework List</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Subject</th>
+                    <th>Class</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="homeworkList"></tbody>
+        </table>
+    </div>
+
+</section>
+
 
 
 
