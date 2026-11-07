@@ -624,6 +624,94 @@ body {
 
 
 
+<!-- Attendance Management -->
+
+<section class="card student-section" id="attendance">
+
+    <h3 class="section-title">Attendance Management</h3>
+
+    <p style="color:var(--muted)">
+        Mark and manage student attendance.
+    </p>
+
+    <form class="attendance-form" id="attendanceForm">
+
+        <input type="date" id="attendanceDate" required>
+
+        <select id="attendanceClass" required>
+            <option value="">Select Class</option>
+            <option>Class 5</option>
+            <option>Class 6</option>
+            <option>Class 7</option>
+            <option>Class 8</option>
+            <option>Class 9</option>
+            <option>Class 10</option>
+            <option>Class 11</option>
+            <option>Class 12</option>
+        </select>
+
+        <select id="attendanceStudent" required>
+            <option value="">Select Student</option>
+        </select>
+
+        <select id="attendanceStatus" required>
+            <option value="">Select Status</option>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+        </select>
+
+        <button type="submit" class="primary-btn">
+            Save Attendance
+        </button>
+
+    </form>
+
+    <div class="attendance-summary">
+
+        <div class="card">
+            <h3>Total</h3>
+            <strong id="totalAttendance">0</strong>
+        </div>
+
+        <div class="card">
+            <h3>Present</h3>
+            <strong id="presentCount">0</strong>
+        </div>
+
+        <div class="card">
+            <h3>Absent</h3>
+            <strong id="absentCount">0</strong>
+        </div>
+
+    </div>
+
+    <div class="table-wrapper">
+
+        <table class="student-table">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Student</th>
+                    <th>Class</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="attendanceList"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+
+
+
 
             <!-- Notices -->
 
