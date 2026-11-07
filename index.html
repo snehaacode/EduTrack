@@ -1432,6 +1432,114 @@ displayAttendance();
 
 
 
+// Homework Management
+
+let homeworkRecords = [];
+
+try {
+    homeworkRecords = JSON.parse(
+        localStorage.getItem("eduTrackHomework")
+    ) || [];
+} catch (error) {
+    homeworkRecords = [];
+}
+
+
+// Display Homework
+
+function displayHomework() {
+
+    const homeworkList = document.getElementById("homeworkList");
+
+    homeworkList.innerHTML = "";
+
+    homeworkRecords.forEach(function(homework) {
+
+        const row = document.createElement("tr");
+
+        const values = [
+            homework.title,
+            homework.subject,
+            homework.className,
+            homework.dueDate
+        ];
+
+        values.forEach(function(value) {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        const actionCell = document.createElement("td");
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+
+        deleteButton.addEventListener("click", function() {
+
+            homeworkRecords = homeworkRecords.filter(function(item) {
+                return item.id !== homework.id;
+            });
+
+            saveHomework();
+        });
+
+        actionCell.appendChild(deleteButton);
+        row.appendChild(actionCell);
+
+        homeworkList.appendChild(row);
+    });
+}
+
+
+// Save Homework
+
+function saveHomework() {
+
+    localStorage.setItem(
+        "eduTrackHomework",
+        JSON.stringify(homeworkRecords)
+    );
+
+    displayHomework();
+}
+
+
+// Add Homework
+
+document.getElementById("homeworkForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const newHomework = {
+
+        id: Date.now(),
+
+        title: document.getElementById("homeworkTitle").value,
+
+        subject: document.getElementById("homeworkSubject").value,
+
+        className: document.getElementById("homeworkClass").value,
+
+        description: document.getElementById("homeworkDescription").value,
+
+        dueDate: document.getElementById("homeworkDueDate").value
+    };
+
+    homeworkRecords.push(newHomework);
+
+    saveHomework();
+
+    this.reset();
+
+    alert("Homework added successfully!");
+});
+
+
+// Load Saved Homework
+
+displayHomework();
+
 
 
 </script>
